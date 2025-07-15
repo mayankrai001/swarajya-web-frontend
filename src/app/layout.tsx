@@ -28,14 +28,15 @@ export const metadata = {
     "ISO 27001 Consulting",
   ],
   openGraph: {
-    title: "ARCH Engineering | Construction & Interior Experts in Maharashtra",
+    title:
+      "Swarajya Consultancy | Web & Analytics Solution Experts in Maharashtra",
     description:
-      "Experts in GMP-compliant pharma spaces, industrial construction, and turnkey interior projects across Maharashtra.",
+      "Experts in web technology solutions and analytics for your data.",
     url: "https://www.swarajyaconsultancy.in",
     siteName: "Swarajya Consultancy",
     images: [
       {
-        url: "https://www.archengineering.com/og-image.jpg",
+        url: "/swarajya-logo.png",
         width: 1200,
         height: 630,
         alt: "Swarajya Consultancy",
