@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 
 const navItems = [
   { name: "Home", href: "#home" },
-  { name: "AbouUs", href: "#about" },
+  { name: "AboutUs", href: "#about" },
   { name: "Services", href: "#services" },
   // { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
@@ -46,8 +46,7 @@ export default function Navbar() {
             scrolling ? "text-gray-800" : "text-white"
           }`}
         >
-          <span className="text-[#FF7F11] text-3xl">💻</span> Swarajya
-          Consultancy
+          Swarajya Consultancy
           {/* <span className="text-[#FF7F11]">.</span> */}
         </Link>
 
