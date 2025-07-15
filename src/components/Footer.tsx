@@ -29,6 +29,22 @@ const Footer = () => {
             >
               business.development@swarajyaconsultancy.in
             </a>
+            <br />
+            <span className="flex items-center mt-1">
+              <img
+                src="/linkedin.png"
+                alt="LinkedIn logo"
+                className="w-4 h-4 drop-shadow-xl rounded-md"
+              />
+              <a
+                href="https://www.linkedin.com/company/swarajya-consultancy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-1 hover:underline"
+              >
+                Follow Us on LinkedIn
+              </a>
+            </span>
           </p>
         </div>
 
