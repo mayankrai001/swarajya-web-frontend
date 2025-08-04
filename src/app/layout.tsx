@@ -93,11 +93,11 @@ export default function RootLayout({
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
           >
-            <img
+            {/* <img
               src="/whatsapp-icon.png"
               alt="WhatsApp Chat"
               className="w-14 h-14 drop-shadow-xl rounded-full animate-bounce"
-            />
+            /> */}
           </a>
         </div>
       </body>

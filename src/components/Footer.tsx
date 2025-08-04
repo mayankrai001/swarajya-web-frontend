@@ -15,11 +15,11 @@ const Footer = () => {
         <div>
           <h4 className="font-bold mb-1">Swarajya Consultancy</h4>
           <p className="text-gray-400">
-            📞{" "}
-            <a href="tel:+91 7219813384" className="hover:underline">
+            {/* 📞{" "} */}
+            {/* <a href="tel:+91 7219813384" className="hover:underline">
               +91 7219813384
-            </a>
-            <br />
+            </a> */}
+            {/* <br /> */}
             📧{" "}
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=business.development@swarajyaconsultancy.in"
