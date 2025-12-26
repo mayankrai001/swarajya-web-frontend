@@ -26,10 +26,11 @@ export default function ContactSection() {
           className="bg-white shadow rounded-lg p-6 space-y-4"
         >
           <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
           <input
             type="hidden"
             name="_next"
-            value="business.development@swarajyaconsultancy.in"
+            value="https://swarajyaconsultancy.in"
           />
 
           <input
