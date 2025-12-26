@@ -29,7 +29,7 @@ export default function ContactSection() {
           <input
             type="hidden"
             name="_next"
-            value="https://swarajyaconsultancy.in"
+            value="business.development@swarajyaconsultancy.in"
           />
 
           <input
