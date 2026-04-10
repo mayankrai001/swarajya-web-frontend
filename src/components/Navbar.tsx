@@ -1,96 +1,156 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { name: "Home", href: "#home" },
-  { name: "AboutUs", href: "#about" },
+  { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
-  // { name: "Projects", href: "#projects" },
+  { name: "Products", href: "#products" },
   { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolling(window.scrollY > 50);
-    };
-
+    setMounted(true);
+    const handleScroll = () => setScrolled(window.scrollY > 30);
     handleScroll();
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <motion.nav
-      initial={{ y: -60, opacity: 0 }}
+      initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 w-full z-50 border-b transition-all duration-300 ${
-        scrolling
-          ? "bg-white/90 shadow-md backdrop-blur-lg border-gray-200"
-          : "bg-transparent border-transparent"
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-[var(--bg-card)] backdrop-blur-lg shadow-lg shadow-black/10 border-b border-transparent"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-        <Link
-          href="/"
-          className={`text-2xl font-extrabold tracking-wide flex items-center gap-1 ${
-            scrolling ? "text-gray-800" : "text-white"
-          }`}
-        >
-          Swarajya Consultancy
-          {/* <span className="text-[#FF7F11]">.</span> */}
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative w-10 h-10 overflow-hidden rounded-xl glass p-1 transition-transform group-hover:scale-105">
+            <Image
+              src="/swarajya-logo-new.png"
+              alt="Swarajya Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <div className="flex flex-col -space-y-1">
+            <span className="text-xl font-bold tracking-tight text-primary">
+              Swarajya
+            </span>
+            <span className="text-xs font-light text-secondary uppercase tracking-[0.2em]">
+              Consultancy
+            </span>
+          </div>
         </Link>
 
-        <div className="hidden md:flex gap-6 lg:gap-10 items-center text-sm font-medium">
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className={`${
-                scrolling ? "text-gray-800" : "text-white"
-              } hover:text-[#FF7F11] transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#FF7F11] hover:after:w-full after:transition-all after:duration-300`}
+              className="relative px-4 py-2 text-sm font-medium text-secondary hover:text-primary transition-colors duration-300 group"
             >
               {item.name}
+              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-accent to-amber-accent group-hover:w-3/4 transition-all duration-300 rounded-full" />
             </a>
           ))}
+
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            className="ml-2 w-9 h-9 flex items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-secondary hover:text-primary"
+            aria-label="Toggle theme"
+          >
+            {mounted && (resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
+          </button>
+
+          <a
+            href="#contact"
+            className="ml-4 px-5 py-2.5 text-sm font-semibold text-white btn-gradient rounded-full flex items-center gap-1.5"
+          >
+            Let&apos;s Talk
+            <ArrowUpRight size={14} strokeWidth={2.5} />
+          </a>
         </div>
 
-        <div className="md:hidden">
+        {/* Mobile Toggle */}
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-secondary hover:text-primary"
+            aria-label="Toggle theme"
+          >
+            {mounted && (resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
+          </button>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`${
-              scrolling ? "text-gray-800" : "text-white"
-            } focus:outline-none`}
+            className="text-primary p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {isOpen && (
-        <div className="md:hidden bg-white px-6 py-4 space-y-4 text-sm font-medium shadow-md border-t">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setIsOpen(false)}
-              className="block text-gray-800 hover:text-[#FF7F11] transition-colors duration-300"
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-      )}
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden glass border-t border-white/5"
+          >
+            <div className="px-6 py-5 space-y-1">
+              {navItems.map((item, i) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => {
+                      setTimeout(() => setIsOpen(false), 200);
+                    }}
+                    className="block px-4 py-3 text-base font-medium text-secondary hover:text-primary hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-all duration-200"
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+              <Link
+                href="#contact"
+                onClick={() => setIsOpen(false)}
+                className="block mt-3 px-4 py-3 text-center text-sm font-semibold text-white btn-gradient rounded-full"
+              >
+                Let&apos;s Talk
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

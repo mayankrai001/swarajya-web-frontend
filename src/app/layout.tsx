@@ -3,40 +3,47 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Head from "next/head";
 import PageWrapper from "@/components/PageWrapper";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata = {
   metadataBase: new URL("https://www.swarajyaconsultancy.in"),
   title: {
-    default: "Swarajya Consultancy | Software Solutions & Analytics",
+    default:
+      "Swarajya Consultancy | Premium Software Solutions & Digital Products",
     template: "%s | Swarajya Consultancy",
   },
   description:
-    "Swarajya Consultancy brings 2+ years of expertise in software solutions.",
+    "Swarajya Consultancy crafts premium digital products and software solutions. From full-stack development to cybersecurity — we engineer excellence.",
   keywords: [
     "Swarajya Consultancy",
-    "Solution Company",
     "Software Solutions",
-    "Analytics",
-    "FullStack Solutions",
+    "Digital Products",
+    "Full Stack Development",
     "Frontend Development",
     "Backend Development",
     "CyberSecurity Solutions",
     "ISO 27001 Consulting",
+    "Analytics",
+    "Power BI",
+    "XpenseControl",
+    "AskIT",
   ],
   openGraph: {
     title:
-      "Swarajya Consultancy | Web & Analytics Solution Experts in Maharashtra",
+      "Swarajya Consultancy | Premium Software Solutions & Digital Products",
     description:
-      "Experts in web technology solutions and analytics for your data.",
+      "We craft premium digital products and full-stack software solutions for businesses worldwide.",
     url: "https://www.swarajyaconsultancy.in",
     siteName: "Swarajya Consultancy",
     images: [
       {
-        url: "/swarajya-logo.png",
+        url: "/swarajya-logo-new.png",
         width: 1200,
         height: 630,
         alt: "Swarajya Consultancy",
@@ -45,14 +52,6 @@ export const metadata = {
     locale: "en_IN",
     type: "website",
   },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   title: "Swarajya Consultancy | Trusted Civil & Interior Contractors",
-  //   description:
-  //     "Swarajya Consultancy specializes in civil, interior, and pharma-compliant turnkey projects across India.",
-  //   images: ["https://www.swarajyaconsultancy.in/og-image.jpg"],
-  //   creator: "@swarajyaconsultancy",
-  // },
   robots: {
     index: true,
     follow: true,
@@ -75,31 +74,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <body className={`${inter.className} bg-white text-gray-900`}>
-        <Navbar />
-        <PageWrapper>{children}</PageWrapper>
-        <Footer />
-
-        {/* ✅ Floating WhatsApp Button */}
-        <div className="fixed bottom-5 right-5 z-50">
-          <a
-            href="https://wa.link/g2fvot"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat on WhatsApp"
-          >
-            {/* <img
-              src="/whatsapp-icon.png"
-              alt="WhatsApp Chat"
-              className="w-14 h-14 drop-shadow-xl rounded-full animate-bounce"
-            /> */}
-          </a>
-        </div>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.className} bg-surface-deep text-slate-100 dark:text-slate-100 antialiased transition-colors duration-300`}
+      >
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <PageWrapper>{children}</PageWrapper>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
