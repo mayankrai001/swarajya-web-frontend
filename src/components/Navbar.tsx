@@ -21,6 +21,25 @@ export default function Navbar() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // Override standard routing for same-page hash links to ensure smooth scroll
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      setIsOpen(false);
+      
+      // Delay allows mobile menu close animation to initiate before scrolling
+      setTimeout(() => {
+        const targetId = href.substring(1);
+        const elem = document.getElementById(targetId);
+        if (elem) {
+          elem.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 150);
+    } else {
+      setIsOpen(false);
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 30);
@@ -64,14 +83,15 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
               className="relative px-4 py-2 text-sm font-medium text-secondary hover:text-primary transition-colors duration-300 group"
             >
               {item.name}
               <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-accent to-amber-accent group-hover:w-3/4 transition-all duration-300 rounded-full" />
-            </a>
+            </Link>
           ))}
 
           {/* Theme Toggle */}
@@ -83,13 +103,14 @@ export default function Navbar() {
             {mounted && (resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
           </button>
 
-          <a
+          <Link
             href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
             className="ml-4 px-5 py-2.5 text-sm font-semibold text-white btn-gradient rounded-full flex items-center gap-1.5"
           >
             Let&apos;s Talk
             <ArrowUpRight size={14} strokeWidth={2.5} />
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -131,9 +152,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => {
-                      setTimeout(() => setIsOpen(false), 200);
-                    }}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className="block px-4 py-3 text-base font-medium text-secondary hover:text-primary hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-all duration-200"
                   >
                     {item.name}
@@ -142,7 +161,7 @@ export default function Navbar() {
               ))}
               <Link
                 href="#contact"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleNavClick(e, "#contact")}
                 className="block mt-3 px-4 py-3 text-center text-sm font-semibold text-white btn-gradient rounded-full"
               >
                 Let&apos;s Talk
