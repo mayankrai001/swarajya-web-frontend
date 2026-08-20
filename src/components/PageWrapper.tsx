@@ -14,6 +14,7 @@ export default function PageWrapper({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
+        className="relative z-0"
       >
         {children}
       </motion.div>

@@ -55,14 +55,18 @@ const technologies = [
   },
 ];
 
+// Split technologies into two rows for dual marquee
+const row1 = technologies.slice(0, Math.ceil(technologies.length / 2));
+const row2 = technologies.slice(Math.ceil(technologies.length / 2));
+
 export default function TechStackSection() {
   return (
     <section className="py-20 sm:py-28 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-14">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center"
@@ -70,8 +74,9 @@ export default function TechStackSection() {
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-4 block">
             Tech Stack
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary">
-            Technologies We <span className="gradient-text">Work With</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary font-display">
+            Technologies We{" "}
+            <span className="shimmer-text">Work With</span>
           </h2>
           <p className="text-secondary max-w-xl mx-auto text-base sm:text-lg">
             Industry-standard tools and frameworks powering our solutions.
@@ -79,31 +84,58 @@ export default function TechStackSection() {
         </motion.div>
       </div>
 
-      {/* Marquee Row */}
-      <div className="relative flex overflow-x-hidden group">
-        <div className="animate-marquee flex whitespace-nowrap py-4">
-          {[...technologies, ...technologies].map((tech, i) => (
+      {/* Row 1 — Left to Right */}
+      <div className="relative flex overflow-x-hidden group mb-4">
+        <div className="animate-marquee flex whitespace-nowrap py-3">
+          {[...row1, ...row1, ...row1, ...row1].map((tech, i) => (
             <div
-              key={`${tech.name}-${i}`}
-              className="glass rounded-2xl mx-3 p-5 sm:p-6 flex flex-col items-center justify-center gap-4 card-glow w-[140px] sm:w-[160px] flex-shrink-0 cursor-default"
+              key={`r1-${tech.name}-${i}`}
+              className="glass-elevated rounded-2xl mx-2.5 p-5 sm:p-6 flex flex-col items-center justify-center gap-3.5 w-[130px] sm:w-[150px] flex-shrink-0 cursor-default group/card hover:border-accent/15 transition-all duration-300 hover:scale-105"
             >
               <img
                 src={tech.src}
                 alt={tech.name}
-                className={`w-10 h-10 sm:w-12 sm:h-12 object-contain group-hover:scale-110 transition-transform duration-300 ${
+                className={`w-10 h-10 sm:w-11 sm:h-11 object-contain transition-transform duration-300 group-hover/card:scale-110 ${
                   (tech as any).customClass || ""
                 }`}
               />
-              <span className="text-xs sm:text-sm font-semibold text-secondary hover:text-primary transition-colors text-center">
+              <span className="text-xs sm:text-sm font-semibold text-secondary group-hover/card:text-primary transition-colors text-center">
                 {tech.name}
               </span>
             </div>
           ))}
         </div>
 
-        {/* Gradient overlays for smooth fading edges */}
-        <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--bg-deep)] to-transparent z-10 pointer-events-none" />
-        <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-[var(--bg-deep)] to-transparent z-10 pointer-events-none" />
+        {/* Edge fades */}
+        <div className="absolute top-0 bottom-0 left-0 w-28 bg-gradient-to-r from-[var(--bg-deep)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 bottom-0 right-0 w-28 bg-gradient-to-l from-[var(--bg-deep)] to-transparent z-10 pointer-events-none" />
+      </div>
+
+      {/* Row 2 — Right to Left */}
+      <div className="relative flex overflow-x-hidden group">
+        <div className="animate-marquee-reverse flex whitespace-nowrap py-3">
+          {[...row2, ...row2, ...row2, ...row2].map((tech, i) => (
+            <div
+              key={`r2-${tech.name}-${i}`}
+              className="glass-elevated rounded-2xl mx-2.5 p-5 sm:p-6 flex flex-col items-center justify-center gap-3.5 w-[130px] sm:w-[150px] flex-shrink-0 cursor-default group/card hover:border-accent/15 transition-all duration-300 hover:scale-105"
+            >
+              <img
+                src={tech.src}
+                alt={tech.name}
+                className={`w-10 h-10 sm:w-11 sm:h-11 object-contain transition-transform duration-300 group-hover/card:scale-110 ${
+                  (tech as any).customClass || ""
+                }`}
+              />
+              <span className="text-xs sm:text-sm font-semibold text-secondary group-hover/card:text-primary transition-colors text-center">
+                {tech.name}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Edge fades */}
+        <div className="absolute top-0 bottom-0 left-0 w-28 bg-gradient-to-r from-[var(--bg-deep)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 bottom-0 right-0 w-28 bg-gradient-to-l from-[var(--bg-deep)] to-transparent z-10 pointer-events-none" />
       </div>
     </section>
   );
